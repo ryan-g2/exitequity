@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "cypress": "^12.1.0"
+    "cypress": "^12.1.0",
+    "npx": "^10.2.2"
   }
 }
