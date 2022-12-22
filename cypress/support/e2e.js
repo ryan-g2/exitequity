@@ -17,6 +17,7 @@
 import './commands'
 import registerCypressGrep from '@cypress/grep/src/support'
 registerCypressGrep()
+import '../support/meetOurTeam/helpers'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
