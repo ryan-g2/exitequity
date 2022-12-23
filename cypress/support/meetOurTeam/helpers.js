@@ -1,10 +1,11 @@
 // Cypress.Commands.add('login', (email, password) => { ... })
 
-Cypress.Commands.add('testCommand', ($el) => {
+Cypress.Commands.add('testCommand', () => {
    cy.log("hi")
 })
 
 Cypress.Commands.add('testAnimationsNameFirst', ($el) => {
+   //This command tests the bios with their names listed first to make sure the correct elements have animations and that the animations also fire
    //Getting persons' name
    cy.get($el).children('div').first().children('div').first().find('h2').parent().parent().should('have.class', 'et_animated').and('not.have.class', 'et_had_animation')
    //Getting persons' blurb
@@ -21,6 +22,7 @@ Cypress.Commands.add('testAnimationsNameFirst', ($el) => {
 })
 
 Cypress.Commands.add('testAnimationsImgFirst', ($el) => {
+   //This command tests the bios with their names listed first to make sure the correct elements have animations and that the animations also fire
    //Getting persons' image
    cy.get($el).children('div').first().children('div').first().find('img').parent().parent().should('have.class', 'et_animated').and('not.have.class', 'et_had_animation')
    //Getting persons' name

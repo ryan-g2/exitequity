@@ -1,0 +1,59 @@
+{
+  "people": [{
+    "name": "Kara Gibson Brzytwa",
+    "credentials": "MBA CBI",
+    "title": "Managing Principal | Managing Broker",
+    "emailName": "kara",
+    "liName": "karagibs",
+    "contactName": "Kara Gibson Brzytwa MBA"
+  },
+    {
+      "name": "Dan Gibson",
+      "credentials": "CBI M&AMI",
+      "title": "Founding Principal | Managing Broker",
+      "emailName": "dgibson",
+      "liName": "e-dan-gibson-4625995",
+      "contactName": "Dan Gibson CBI M&AMI"
+    },
+    {
+      "name": "Terry Coe",
+      "credentials": "CBI M&AMI",
+      "title": "M&A Intermediary | Business Broker",
+      "emailName": "terry",
+      "liName": "terrellcoe",
+      "contactName": "Terry Cos MBA CBI"
+    },
+    {
+      "name": "Phil Brzytwa",
+      "credentials": "",
+      "title": "M&A Intermediary | Business Broker",
+      "emailName": "Phil",
+      "liName": "philbrzytwa",
+      "contactName": "Phil Brzytwa MBA"
+    },
+    {
+      "name": "Keith Rogstad",
+      "credentials": "MBA AVA",
+      "title": "Business Valuation Analyst | Business Broker",
+      "emailName": "keith",
+      "liName": "keith-rogstad-mba-cva-0832b32",
+      "contactName": "Keith L. Rogstad"
+    },
+    {
+      "name": "Noordin Rayani",
+      "credentials": "",
+      "title": "Business Broker",
+      "emailName": "noordin",
+      "liName": "",
+      "contactName": "Noordin Rayani"
+    },
+    {
+      "name": "Julie Uptain",
+      "credentials": "",
+      "title": "Business Development",
+      "emailName": "julie",
+      "liName": "julie-uptain-55a54b124",
+      "contactName": "Juslie Uptain"
+    }
+  ]
+}

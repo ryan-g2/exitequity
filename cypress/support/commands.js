@@ -11,6 +11,15 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add('capitalizeFirstLetter', (string) => {
+    //takes a sting and capitalizes first letter of each word while the rest are lowercase
+    var arr = string.split(" ")
+    for (var i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1).toLowerCase();
+    }
+    var fixedName = arr.join(" ")
+    return fixedName
+})
 //
 //
 // -- This is a child command --
