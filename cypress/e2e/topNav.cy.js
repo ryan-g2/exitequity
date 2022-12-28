@@ -1,5 +1,7 @@
 describe('Group', () => {
     const topLinkNames = ["Sell your Business", "Services", "Listings", "About Us", "Resources"]
+    const fbLink = "https://www.facebook.com/ExitEquity/"
+    const liLink = "https://www.linkedin.com/company/exit-equity/"
 
     beforeEach(() => {
         cy.visit('/')
@@ -10,28 +12,12 @@ describe('Group', () => {
             .should('have.css', 'background-image', 'url("https://exitequity.com/wp-content/uploads/2021/12/equityV2logo.png")')
     })
 
-    it("Verify Lets Talk button exists and functions", {tags: ['bvt', 'smoke']}, () => {
+    it("Verify 'Lets Talk' button exists and functions", {tags: ['bvt', 'smoke']}, () => {
         cy.get('.et_pb_row_1_tb_header').find('.et_pb_button_0_tb_header')
-            .should('have.attr', 'href', '/contact').and('contain', "LET'S TALK")//.click() < --commented out due to error on Contact page
-        //cy.url().should('contain', '/contact-us') < --commented out due to error on Contact page
-    })
-
-    it("Test", () => {
-        cy.get('#menu-prim-menu').children().each(($el) => {
-
-            cy.log($el.text())
-        })
-        cy.get('ul#menu-prim-menu > .et_pb_menu_page_id-193.menu-item.menu-item-193.menu-item-has-children.menu-item-object-custom.menu-item-type-custom > ul')
-            .children().each(($el) => {
-
-            cy.log($el.text())
-        })
-        cy.get('#menu-prim-menu').children().first().invoke('text').then((name) => {
-            cy.log(JSON.stringify(name))
-        })
-        // cy.get('a').contains('Sell your Business')
-        // // cy.get(".et_pb_menu_page_id-67 menu-item menu-item-type-post_type menu-item-object-page menu-item-84").eq(0).click({force:true})
-        // cy.get('a').contains('The Process').eq(0).click({force:true})
+            .should('have.attr', 'href', '/contact')
+            .and('have.css', 'background-color', 'rgb(51, 77, 66)')
+            .and('contain', "LET'S TALK")//.click() < --commented out due to error on Contact page
+            //cy.url().should('contain', '/contact-us') < --commented out due to error on Contact page
     })
 
     it("Verify top-level nav section names are correct", {tags: ['bvt', 'smoke']}, () => {
@@ -55,7 +41,7 @@ describe('Group', () => {
     })
 
     it("Verify nav items link to correct pages and they load", {tags: ['smoke']}, () => {
-
+        //This verifies the 'Home' link
         cy.get('#menu-prim-menu').within(() => {
             cy.root().find('a').first().each((topLink) => {
                 cy.log(topLink.text())
@@ -66,20 +52,53 @@ describe('Group', () => {
                 cy.url().should('include', hrefValue)
             })
         })
-
+        //This verifies the rest of the links in the top nav that go to another page
         cy.get('#menu-prim-menu > .menu-item-has-children').each(($el) => {
-            // cy.get($list).children().first()
             cy.get($el).children('.sub-menu').within(() => {
                 cy.get('a').each((topLink) => {
                         cy.log(topLink.text())
                         expect(topLink).to.have.attr('href')
-                        // const hrefValue = topLink.attr('href')
                         cy.request('POST', topLink.attr('href')).then((resp) => {
                             expect(resp.status).to.equal(200)
                         })
-                        // cy.log(hrefValue)
                 })
             })
         })
+    })
+
+    it("Verify top nav header appears correctly", () => {
+        cy.get(".et_pb_row.et_pb_row_0_tb_header.et_pb_equal_columns").children().eq(0).find('a').then(($el) => {
+            expect($el).to.have.text("(425) 462-5819")
+            expect($el).to.have.attr("href", "tel:4254625819")
+        })
+        cy.get(".et_pb_row.et_pb_row_0_tb_header.et_pb_equal_columns").children().eq(1).find('a').then(($el) => {
+            expect($el).to.have.text("Send us a message")
+            expect($el).to.have.attr("href", "/contact-us/")
+        })
+        cy.get(".et_pb_row.et_pb_row_0_tb_header.et_pb_equal_columns").children().eq(2).find('a').then(($el) => {
+            expect($el).to.have.text("info@exitequity.com")
+            expect($el).to.have.attr("href", "mailto:info@exitequity.com")
+            expect($el).to.have.attr("target", "_blank")
+        })
+        cy.get(".et_pb_row.et_pb_row_0_tb_header.et_pb_equal_columns").children().eq(3).find('li').eq(0).find('a').then(($el) => {
+            expect($el).to.have.attr('title', 'Follow on Facebook')
+            expect($el).to.have.attr('target', '_blank')
+            expect($el).to.have.css('background-color', 'rgb(51, 77, 66)')
+            expect($el).to.have.attr('href', fbLink)
+            cy.request('POST', fbLink).then((resp) => {
+                expect(resp.status).to.equal(200)
+            })
+        })
+        cy.get(".et_pb_row.et_pb_row_0_tb_header.et_pb_equal_columns").children().eq(3).find('li').eq(1).find('a').then(($el) => {
+            expect($el).to.have.attr('title', 'Follow on LinkedIn')
+            expect($el).to.have.attr('target', '_blank')
+            expect($el).to.have.css('background-color', 'rgb(51, 77, 66)')
+            expect($el).to.have.attr('href', liLink)
+            //Commented out since requesting a LI page without being signed in will return a 403-Forbidden statusCode
+            // cy.request('POST', liLink).then((resp) => {
+            //     expect(resp.status).to.equal(200)
+            // })
+        })
+
     })
 })

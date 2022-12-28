@@ -139,26 +139,27 @@ describe('Testing the "Meet our Team" page', () => {
                     expect(el).to.have.css('text-transform', 'uppercase')
                     expect(el).to.have.css('color', 'rgb(0, 138, 95)')
                     cy.get(el).invoke('text').then(($element) => {
-                        // cy.fixture('people').then((person, index) => {
-                        // cy.fixture('bios').as('bios')
-                        //     cy.log("The index is: " + $index)
-                        // cy.log(people.people[$index].name)
                         expect($element).to.equal((people.people[$index].title))
-                        //     bios.forEach((person) => {
-                        //         cy.log(person)
-                            // })
-
-                            // cy.log(people[$index].title)
-                            // expect($element).to.equal(people.title)
-                            // expect(people.title).to.equal($element)
-                        // })
-
                     })
                 })
             })
         })
     })
 
+    it("Verify name and credentials of person appear correctly", () => {
+        cy.get('#main-content').within(() => {
+            cy.get('[class^="et_pb_row"]').not('.et_pb_row_0').not('.et_pb_row_1').each(($el,  $index) => {
+                cy.get($el).scrollIntoView().find('strong').parent().parent().then((el) => {
+                    // expect(el).to.have.css('font-size', '24px')
+                    cy.get(el).invoke('text').then(($element) => {
+                        // const upperName = people.people[$index].name.toUpperCase()
+                        // cy.log(upperName)
+                        expect($element).to.equal((people.people[$index].name.toUpperCase() + " " + (people.people[$index].credentials)).trim())
+                    })
+                })
+            })
+        })
+    })
 })
 
 
