@@ -8,6 +8,14 @@ describe('Footer Tests', () => {
         cy.get('#testimonials').click({force: true}) // This is to trigger loading b.c of lazy loading
     })
 
+    it("Verify blurb exists in footer", { tags: ['bvt', 'smoke'] }, () => {
+        cy.get('footer').find('.et_pb_column_0_tb_footer').should('exist')
+        cy.get('.et_pb_column_0_tb_footer').find('img').click().then((el) => {//The 'click' here is to get the img to load b.c. of lazy loading
+            expect(el).to.have.attr('src', 'https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png')
+            cy.get('[src="https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png"]').should('be.visible')
+        })
+    })
+
     it("Verify form exists in footer", { tags: ['bvt', 'smoke'] }, () => {
         cy.get('footer').find('.et_pb_column_1_tb_footer').find('form').should('exist')
         cy.get('.et_pb_row_0_tb_footer').find('#gform_submit_button_1').contains('Submit').should('exist').and('be.enabled')
@@ -18,19 +26,53 @@ describe('Footer Tests', () => {
         cy.get('@contactFooter').contains('Contact')
     })
 
-    it("Verify contact info appears correctly", { tags: ['bvt', 'smoke'] }, () => {
-        cy.get('footer').find('.et_pb_column_2_tb_footer').find('.et_pb_text_inner').as('contactFooterInfo')
-        cy.testContactHeaders('h4', 'Contact', 'rgb(255, 255, 255)', '14px')
-        cy.testContactHeaders('h3', 'Get In Touch', 'rgb(169, 125, 79)', '24px')
-        cy.testContactText('(425) 462-5819', '0')
-        cy.testContactText('info@exitequity.com', '1')
-        cy.testContactText('M-F: 8am-6pm', '2')
-        cy.testContactIcon('0', 'Follow on Facebook', 'https://www.facebook.com/ExitEquity/')
-        cy.testContactIcon('1', 'Follow on LinkedIn', 'https://www.linkedin.com/company/exit-equity')
-
+    it("Verify blurb info appears correctly", { tags: ['bvt', 'smoke'] }, () => {
+        //Test that the logo appears correctly
+        cy.get('.et_pb_column_0_tb_footer').find('img').click().then((el) => {//The 'click' here is to get the img to load b.c. of lazy loading
+            expect(el).to.have.attr('src', 'https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png')
+            cy.get('[src="https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png"]').should('be.visible')
+            expect(el).to.have.css('background-color', 'rgba(0, 0, 0, 0)')
+            expect(el).to.have.attr('height', '35')
+            expect(el).to.have.attr('width', '300')
+        })
+        //Test that that green field appears correctly
+        cy.get('.et_pb_column_0_tb_footer').then((el) => {
+            expect(el).to.have.css('background-color', 'rgb(51, 77, 66)')
+            expect(el).to.have.css('padding-right', '40px')
+            expect(el).to.have.css('padding-bottom', '40px')
+            expect(el).to.have.css('padding-left', '40px')
+            expect(el).to.have.css('padding-top', '40px')
+        })
+        //Test that the white text appears correctly
+        cy.get('.et_pb_column_0_tb_footer').find('.et_pb_text_0_tb_footer').find('p').then((el) => {
+            expect(el).to.have.css('color', 'rgb(255, 255, 255)')
+            expect(el).to.have.css('font-family', 'Montserrat, Helvetica, Arial, Lucida, sans-serif')
+            expect(el).to.have.css('font-size', '16px')
+            expect(el).to.have.css('text-align', 'left')
+            expect(el).to.have.text('Remember: There are only three times when you can sell your business!When you want to…When you have to…When your heirs do…')
+        })
+        //Test that the gold text appears correctly
+        cy.get('.et_pb_column_0_tb_footer').find('.et_pb_text_1_tb_footer').find('h3').then((el) => {
+            expect(el).to.have.css('color', 'rgb(169, 125, 79)')
+            expect(el).to.have.css('font-family', 'Glegoo, Georgia, "Times New Roman", serif')
+            expect(el).to.have.text('So Let’s Get Started')
+            expect(el).to.have.css('font-size', '24px')
+            expect(el).to.have.css('text-transform', 'uppercase')
+            expect(el).to.have.css('text-align', 'left')
+        })
     })
 
     it("Verify footer form appears correctly", { tags: ['bvt', 'smoke'] }, () => {
+        //Tests for the column title
+        cy.get('.et_pb_row_0_tb_footer').find('.et_pb_text_2_tb_footer').find('h3').scrollIntoView().then((el) => {
+            expect(el).to.have.text('Send Us A Message')
+            expect(el).to.have.css('color', 'rgb(169, 125, 79)')
+            expect(el).to.have.css('font-family', 'Glegoo, Georgia, "Times New Roman", serif')
+            expect(el).to.have.css('font-size', '24px')
+            expect(el).to.have.css('text-transform', 'uppercase')
+            expect(el).to.have.css('text-align', 'left')
+
+        })
         //Tests for the 'Name' element
         cy.get('.et_pb_row_0_tb_footer').find('#field_1_7').scrollIntoView().as('nameLabel')
             .find('label').eq(0).should('have.text', 'Name*')
@@ -77,6 +119,18 @@ describe('Footer Tests', () => {
         cy.get('.et_pb_row_0_tb_footer').find('#gform_submit_button_1').contains('Submit').should('exist').and('be.enabled')
     })
 
+    it("Verify contact info appears correctly", { tags: ['bvt', 'smoke'] }, () => {
+        cy.get('footer').find('.et_pb_column_2_tb_footer').find('.et_pb_text_inner').as('contactFooterInfo')
+        cy.testContactHeaders('h4', 'Contact', 'rgb(255, 255, 255)', '14px')
+        cy.testContactHeaders('h3', 'Get In Touch', 'rgb(169, 125, 79)', '24px')
+        cy.testContactText('(425) 462-5819', '0')
+        cy.testContactText('info@exitequity.com', '1')
+        cy.testContactText('M-F: 8am-6pm', '2')
+        cy.testContactIcon('0', 'Follow on Facebook', 'https://www.facebook.com/ExitEquity/')
+        cy.testContactIcon('1', 'Follow on LinkedIn', 'https://www.linkedin.com/company/exit-equity')
+
+    })
+
     it("Make sure contact info is correct", { tags: ['bvt', 'smoke'] }, () => {
         cy.get('.et_pb_text_4_tb_footer .et_pb_text_inner').find('a').eq(0).should('contain', '(425) 462-5819')
         cy.get('.et_pb_text_4_tb_footer .et_pb_text_inner').find('a').eq(1).should('contain', 'info@exitequity.com')
@@ -93,5 +147,18 @@ describe('Footer Tests', () => {
             .and('exist')
             .and('have.attr', 'target', '_blank')
     })
+
+    // it("Tests for correct error messages when submitting form (form not filled out at all)", { tags: 'smoke' }, () => {
+    //
+    // })
+    //
+    // it("Perhaps tests for errors on individual inputs while all others are correct.", { tags: 'smoke' }, () => {
+    //
+    // })
+    //
+    // it("Tests to make sure the F on In icons in footer are not green color like other buttons", { tags: 'smoke' }, () => {
+    // content CSS code points to the social icon graphic
+    //Can test background and text color
+    // })
 
 })
