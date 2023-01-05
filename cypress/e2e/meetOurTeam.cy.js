@@ -126,7 +126,7 @@ describe('Testing the "Meet our Team" page', () => {
             cy.get('[class^="et_pb_row"]').not('.et_pb_row_0').not('.et_pb_row_1').each(($el) => {
                 cy.get($el).scrollIntoView().find('.et_pb_image_wrap').parent().parent().then(($el) => {
                     cy.get($el).should('be.visible')
-                    expect($el).to.have.css('background-image', 'linear-gradient(115deg, rgb(0, 138, 95) 0px, rgb(20, 48, 2) 100%)')
+                    expect($el).to.have.css('background-image', 'linear-gradient(115deg, rgb(0, 138, 95) 0%, rgb(20, 48, 2) 100%)')
                 })
             })
         })

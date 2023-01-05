@@ -12,6 +12,7 @@ module.exports = defineConfig({
     trashAssetsBeforeRuns: true,
     waitForAnimations: true,
     baseUrl: 'https://exitequity.com/',
-    video: false
+    video: false,
+    chromeWebSecurity: false
   },
 });

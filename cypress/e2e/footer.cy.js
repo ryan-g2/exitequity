@@ -13,6 +13,7 @@ describe('Footer Tests', () => {
         cy.get('.et_pb_column_0_tb_footer').find('img').click().then((el) => {//The 'click' here is to get the img to load b.c. of lazy loading
             expect(el).to.have.attr('src', 'https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png')
             cy.get('[src="https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png"]').should('be.visible')
+            cy.percySnapshot()
         })
     })
 
@@ -148,9 +149,47 @@ describe('Footer Tests', () => {
             .and('have.attr', 'target', '_blank')
     })
 
-    // it("Tests for correct error messages when submitting form (form not filled out at all)", { tags: 'smoke' }, () => {
-    //
-    // })
+    it("Tests for general error message when submitting form", { tags: 'smoke' }, () => {
+        cy.get('#gform_submit_button_1').scrollIntoView().click().then(() => {
+            cy.footerGeneralError()
+        })
+    })
+
+    it.only("Tests for the Name error messages when submitting form", { tags: 'smoke' }, () => {
+        cy.get('#input_1_7_6').scrollIntoView().type('last name')//Last name input
+        cy.get('#input_1_9').type('Company')//Company input
+        cy.get('#input_1_10').type('2323232323')//Phone input
+        cy.get('#input_1_11').type('email@email.com')//Email input
+        cy.get('#input_1_12').type(' ').click()
+        cy.get('#gform_submit_button_1').click().then(() => {
+            cy.footerGeneralError()
+            cy.footerFirstNameError()
+        })
+
+
+        // cy.get('.et_pb_row_11').scrollIntoView().click().then(() => {
+        //     cy.get('.et_pb_button_9').scrollIntoView()
+        //     cy.get('#gform_submit_button_1').scrollIntoView()
+        // })
+
+
+        // cy.get('#testimonials').scrollIntoView().click().then(()=> {//Email input and click to get captcha to load via lazy load
+        //     cy.get('#input_1_13').find('iframe').eq(0).should('be.visible')
+
+                // .find('.rc-anchor-logo-img').then(() => {
+                //
+                // cy.get('#recaptcha-anchor').check().should('have.attr', 'recaptcha-checkbox-checked').then(() => {//check captcha
+                //     cy.get('#gform_submit_button_1').scrollIntoView().click().then(() => {
+                //         cy.footerGeneralError()
+                //         cy.footerFirstNameError()
+                //     })
+                // })
+            // })
+        // })
+    })
+
+
+
     //
     // it("Perhaps tests for errors on individual inputs while all others are correct.", { tags: 'smoke' }, () => {
     //
@@ -159,6 +198,9 @@ describe('Footer Tests', () => {
     // it("Tests to make sure the F on In icons in footer are not green color like other buttons", { tags: 'smoke' }, () => {
     // content CSS code points to the social icon graphic
     //Can test background and text color
+    //Test to Make sure the phone number gets formatted correctly in the footer form
+    //Tests to make sure the correct default messages are in the form fields
+    //Test for error msg when captcha checkmark times out (after a minute or so)
     // })
 
 })
