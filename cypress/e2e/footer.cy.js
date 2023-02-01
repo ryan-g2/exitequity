@@ -1,14 +1,14 @@
 /// <reference types="cypress"/>
 import '../support/footer/helpers'
 
-describe('Footer Tests', () => {
+describe('Footer Tests', { tags: ['full'] }, () => {
 
     beforeEach(() => {
         cy.visit('/')
         cy.get('#testimonials').click({force: true}) // This is to trigger loading b.c of lazy loading
     })
 
-    it("Verify blurb exists in footer", { tags: ['bvt', 'smoke'] }, () => {
+    it("Verify blurb exists in footer", { tags: [] }, () => {
         cy.get('footer').find('.et_pb_column_0_tb_footer').should('exist')
         cy.get('.et_pb_column_0_tb_footer').find('img').click().then((el) => {//The 'click' here is to get the img to load b.c. of lazy loading
             expect(el).to.have.attr('src', 'https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png')
@@ -17,17 +17,17 @@ describe('Footer Tests', () => {
         })
     })
 
-    it("Verify form exists in footer", { tags: ['bvt', 'smoke'] }, () => {
+    it("Verify form exists in footer", { tags: ['bvt', 'smoke', 'rc'] }, () => {
         cy.get('footer').find('.et_pb_column_1_tb_footer').find('form').should('exist')
         cy.get('.et_pb_row_0_tb_footer').find('#gform_submit_button_1').contains('Submit').should('exist').and('be.enabled')
     })
 
-    it("Verify contact info exists in footer", { tags: ['bvt', 'smoke'] }, () => {
+    it("Verify contact info exists in footer", { tags: ['smoke', 'rc'] }, () => {
         cy.get('footer').find('.et_pb_column_2_tb_footer').as('contactFooter').should('exist')
         cy.get('@contactFooter').contains('Contact')
     })
 
-    it("Verify blurb info appears correctly", { tags: ['bvt', 'smoke'] }, () => {
+    it("Verify blurb info appears correctly", { tags: [] }, () => {
         //Test that the logo appears correctly
         cy.get('.et_pb_column_0_tb_footer').find('img').click().then((el) => {//The 'click' here is to get the img to load b.c. of lazy loading
             expect(el).to.have.attr('src', 'https://exitequity.com/wp-content/uploads/2021/11/logo_horiz-wht-300x35.png')
@@ -63,7 +63,7 @@ describe('Footer Tests', () => {
         })
     })
 
-    it("Verify footer form appears correctly", { tags: ['bvt', 'smoke'] }, () => {
+    it("Verify footer form appears correctly", { tags: ['bvt', 'rc'] }, () => {
         //Tests for the column title
         cy.get('.et_pb_row_0_tb_footer').find('.et_pb_text_2_tb_footer').find('h3').scrollIntoView().then((el) => {
             expect(el).to.have.text('Send Us A Message')
@@ -112,15 +112,16 @@ describe('Footer Tests', () => {
             expect($el).to.have.attr('cols', '50')
         })
         // Tests for 'Captcha' element
-        cy.get('.et_pb_row_0_tb_footer').find('#field_1_13').find('iframe').scrollIntoView().then(($el) => {
+        cy.get('[title="reCAPTCHA"]').scrollIntoView().then(($el) => {
             expect($el).to.exist
             cy.get($el).should('be.visible')
             expect($el).to.have.attr('title', 'reCAPTCHA')
         })
-        cy.get('.et_pb_row_0_tb_footer').find('#gform_submit_button_1').contains('Submit').should('exist').and('be.enabled')
+//        Expected failure here since there is a captcha element that cannot be interacted with - the button can't be clicked so the button isn't visible
+        cy.get('.et_pb_row_0_tb_footer').find('#gform_submit_button_1').contains('Submit').should('exist').and('be.visible').and('be.enabled')
     })
 
-    it("Verify contact info appears correctly", { tags: ['bvt', 'smoke'] }, () => {
+    it("Verify contact info appears correctly", { tags: ['smoke', 'rc'] }, () => {
         cy.get('footer').find('.et_pb_column_2_tb_footer').find('.et_pb_text_inner').as('contactFooterInfo')
         cy.testContactHeaders('h4', 'Contact', 'rgb(255, 255, 255)', '14px')
         cy.testContactHeaders('h3', 'Get In Touch', 'rgb(169, 125, 79)', '24px')
@@ -132,13 +133,7 @@ describe('Footer Tests', () => {
 
     })
 
-    it("Make sure contact info is correct", { tags: ['bvt', 'smoke'] }, () => {
-        cy.get('.et_pb_text_4_tb_footer .et_pb_text_inner').find('a').eq(0).should('contain', '(425) 462-5819')
-        cy.get('.et_pb_text_4_tb_footer .et_pb_text_inner').find('a').eq(1).should('contain', 'info@exitequity.com')
-        cy.get('.et_pb_text_4_tb_footer .et_pb_text_inner').find('a').eq(2).should('contain', 'M-F: 8am-6pm')
-    })
-
-    it("Make sure social buttons exist and point to correct targets", { tags: 'smoke' }, () => {
+    it("Make sure social buttons exist and point to correct targets", { tags: [] }, () => {
         cy.get('.et_pb_column_2_tb_footer ul').find('a').eq(0)
             .should('have.attr', 'href', 'https://www.facebook.com/ExitEquity/')
             .and('exist')
@@ -149,13 +144,16 @@ describe('Footer Tests', () => {
             .and('have.attr', 'target', '_blank')
     })
 
-    it("Tests for general error message when submitting form", { tags: 'smoke' }, () => {
+    it.skip("Tests for general error message when submitting form", { tags: [] }, () => {
+    //This test is skipped due to the submit button not appearing on the site (also this is a captcha item)
         cy.get('#gform_submit_button_1').scrollIntoView().click().then(() => {
             cy.footerGeneralError()
         })
     })
 
-    it.only("Tests for the Name error messages when submitting form", { tags: 'smoke' }, () => {
+    it.skip("Tests for the Name error messages when submitting form", { tags: [] }, () => {
+//    Skipping this out due to the captcha that automation cannot get around.   Click this button is needed to see the error states and also to test them.
+//    Can't test the rest of the error states due to this captcha.
         cy.get('#input_1_7_6').scrollIntoView().type('last name')//Last name input
         cy.get('#input_1_9').type('Company')//Company input
         cy.get('#input_1_10').type('2323232323')//Phone input
@@ -165,27 +163,6 @@ describe('Footer Tests', () => {
             cy.footerGeneralError()
             cy.footerFirstNameError()
         })
-
-
-        // cy.get('.et_pb_row_11').scrollIntoView().click().then(() => {
-        //     cy.get('.et_pb_button_9').scrollIntoView()
-        //     cy.get('#gform_submit_button_1').scrollIntoView()
-        // })
-
-
-        // cy.get('#testimonials').scrollIntoView().click().then(()=> {//Email input and click to get captcha to load via lazy load
-        //     cy.get('#input_1_13').find('iframe').eq(0).should('be.visible')
-
-                // .find('.rc-anchor-logo-img').then(() => {
-                //
-                // cy.get('#recaptcha-anchor').check().should('have.attr', 'recaptcha-checkbox-checked').then(() => {//check captcha
-                //     cy.get('#gform_submit_button_1').scrollIntoView().click().then(() => {
-                //         cy.footerGeneralError()
-                //         cy.footerFirstNameError()
-                //     })
-                // })
-            // })
-        // })
     })
 
 

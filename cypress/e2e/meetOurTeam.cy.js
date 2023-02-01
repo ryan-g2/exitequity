@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 import people from '../fixtures/bios.json'
 
-describe('Testing the "Meet our Team" page', () => {
+describe('Testing the "Meet our Team" page', { tags: ['full'] }, () => {
     //Not all bios are arranged the same in the code, hence the need to treat each list a little differently when testing
     const nameFirst = ['.et_pb_row_2', '.et_pb_row_3', '.et_pb_row_6']
     const imgFirst = ['.et_pb_row_4', '.et_pb_row_5', '.et_pb_row_7', '.et_pb_row_8']
@@ -11,13 +11,16 @@ describe('Testing the "Meet our Team" page', () => {
         cy.get(".et_pb_row_2").find('.et_pb_image_wrap').find('img').click({force: true}) // This is to trigger loading b.c of lazy loading
     })
 
-    it("Verify header image and text is correct", () => {
+    it("Verify header image and text is correct", { tags: ['smoke', 'rc'] }, () => {
         cy.get('.et_pb_section_0')
             .should('have.css', 'background-image', 'url("https://exitequity.com/wp-content/uploads/2021/10/Exit-Equity18.jpg")')
         cy.get('.et_pb_section_0').find('h1').should('contain', 'Meet our Team')
         cy.get('.et_pb_section_0').find('.et_pb_text_inner').find('p')
             .should('contain', 'Providing M&A Advisory Services for Small to Mid Size Companies')
     })
+
+//The bios on this page are not all written in the same order, some have the Names first and others have the image first.
+//Each requires slightly different code to automate since there are no other easy selector to have Cypress navigate the code with
 
     it("Verify animations occur on Name-First bios", () => {
         nameFirst.forEach(($el) => {
@@ -31,7 +34,7 @@ describe('Testing the "Meet our Team" page', () => {
         })
     })
 
-    it("Verify the persons' name appears in their contact link correctly (nameFirst)", () => {
+    it("Verify the persons' name appears in their contact link correctly (nameFirst)", { tags: [] }, () => {
         nameFirst.forEach((element) => {
             cy.get(element).within(() => {
                 var bigName = ""
@@ -59,7 +62,7 @@ describe('Testing the "Meet our Team" page', () => {
         })
     })
 
-    it("Verify the persons' name appears in their contact link correctly (imgFirst)", () => {
+    it("Verify the persons' name appears in their contact link correctly (imgFirst)", { tags: [] }, () => {
         imgFirst.forEach((element) => {
             cy.get(element).within(() => {
                 var bigName = ""
@@ -111,7 +114,7 @@ describe('Testing the "Meet our Team" page', () => {
         })
     })
 
-    it("Verify the bio images are are visible", () => {
+    it("Verify the bio images are are visible", { tags: ['smoke', 'rc'] }, () => {
         cy.get('#main-content').within(() => {
             cy.get('[class^="et_pb_row"]').not('.et_pb_row_0').not('.et_pb_row_1').each(($el) => {
                 cy.get($el).scrollIntoView().find('.et_pb_image_wrap').then((img) => {
@@ -132,7 +135,7 @@ describe('Testing the "Meet our Team" page', () => {
         })
     })
 
-    it("Verify bio titles appear correctly", () => {
+    it("Verify bio titles appear correctly", { tags: ['rc'] }, () => {
         cy.get('#main-content').within(() => {
             cy.get('[class^="et_pb_row"]').not('.et_pb_row_0').not('.et_pb_row_1').each(($el,  $index) => {
                 cy.get($el).scrollIntoView().find('h4').then((el) => {
@@ -146,7 +149,7 @@ describe('Testing the "Meet our Team" page', () => {
         })
     })
 
-    it("Verify name and credentials of person appear correctly", () => {
+    it("Verify name and credentials of person appear correctly", { tags: ['rc'] }, () => {
         cy.get('#main-content').within(() => {
             cy.get('[class^="et_pb_row"]').not('.et_pb_row_0').not('.et_pb_row_1').each(($el,  $index) => {
                 cy.get($el).scrollIntoView().find('strong').parent().parent().then((el) => {

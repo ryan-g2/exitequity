@@ -1,4 +1,4 @@
-describe('Group', () => {
+describe('Group', { tags: ['full'] }, () => {
     const topLinkNames = ["Sell your Business", "Services", "Listings", "About Us", "Resources"]
     const fbLink = "https://www.facebook.com/ExitEquity/"
     const liLink = "https://www.linkedin.com/company/exit-equity/"
@@ -7,12 +7,12 @@ describe('Group', () => {
         cy.visit('/')
     })
 
-    it("Verify logo exists", {tags: ['bvt', 'smoke']}, () => {
+    it("Verify logo exists", {tags: ['bvt', 'smoke', 'rc']}, () => {
         cy.get('.et_pb_row_1_tb_header').find('.et_pb_column_4_tb_header')
             .should('have.css', 'background-image', 'url("https://exitequity.com/wp-content/uploads/2021/12/equityV2logo.png")')
     })
 
-    it("Verify 'Lets Talk' button exists and functions", {tags: ['bvt', 'smoke']}, () => {
+    it("Verify 'Lets Talk' button exists and functions", {tags: ['smoke']}, () => {
         cy.get('.et_pb_row_1_tb_header').find('.et_pb_button_0_tb_header')
             .should('have.attr', 'href', '/contact')
             .and('have.css', 'background-color', 'rgb(51, 77, 66)')
@@ -20,7 +20,7 @@ describe('Group', () => {
             //cy.url().should('contain', '/contact-us') < --commented out due to error on Contact page
     })
 
-    it("Verify top-level nav section names are correct", {tags: ['bvt', 'smoke']}, () => {
+    it("Verify top-level nav section names are correct", {tags: ['bvt', 'smoke', 'rc']}, () => {
 
         cy.get('#menu-prim-menu').within(() => {
             cy.root().find('a').first().each((topLink) => {
@@ -40,7 +40,7 @@ describe('Group', () => {
         })
     })
 
-    it("Verify nav items link to correct pages and they load", {tags: ['smoke']}, () => {
+    it("Verify nav items link to correct pages and they load", {tags: ['smoke', 'rc']}, () => {
         //This verifies the 'Home' link
         cy.get('#menu-prim-menu').within(() => {
             cy.root().find('a').first().each((topLink) => {
@@ -66,7 +66,7 @@ describe('Group', () => {
         })
     })
 
-    it("Verify top nav header appears correctly", () => {
+    it("Verify top nav header appears correctly", { tags: ['smoke', 'rc'] }, () => {
         cy.get(".et_pb_row.et_pb_row_0_tb_header.et_pb_equal_columns").children().eq(0).find('a').then(($el) => {
             expect($el).to.have.text("(425) 462-5819")
             expect($el).to.have.attr("href", "tel:4254625819")

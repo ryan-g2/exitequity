@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 
 // https://exitequity.com/contact-us/
-describe('Group', () => {
+describe('Group', { tags: ['rc', 'full'] }, () => {
 
     beforeEach(() => {
         cy.visit('/contact-us')
