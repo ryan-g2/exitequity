@@ -138,10 +138,28 @@ describe('Footer Tests', { tags: ['full'] }, () => {
             .should('have.attr', 'href', 'https://www.facebook.com/ExitEquity/')
             .and('exist')
             .and('have.attr', 'target', '_blank')
+            .and('have.css', 'color', 'rgb(51, 77, 66)') //Test to make sure text color is green
+            .and('have.css', 'background-color', 'rgb(255, 255, 255)') //Test to make sure background is white
+        cy.get('.et_pb_column_2_tb_footer ul').find('a').eq(0)
+        .scrollIntoView()
+        .within(($el) => {
+            cy.window().then((win) => {// get Window reference from element
+                  // use getComputedStyle to read the pseudo selector
+                  const before = win.getComputedStyle($el[0], "::before")
+                  cy.log(before)
+                  // read the value of the `content` CSS property
+                  const beforeContent = before.getPropertyValue('content')
+                  const checkThis = beforeContent.codePointAt(0).toString(16) //This converts the icon code to a number so that can be asserted on
+                  expect(checkThis).to.equal('22')
+            })
+        })
+
         cy.get('.et_pb_column_2_tb_footer ul').find('a').eq(1)
             .should('have.attr', 'href', 'https://www.linkedin.com/company/exit-equity')
             .and('exist')
             .and('have.attr', 'target', '_blank')
+            .and('have.css', 'color', 'rgb(51, 77, 66)') //Test to make sure text color is green
+            .and('have.css', 'background-color', 'rgb(255, 255, 255)') //Test to make sure background is white
     })
 
     it.skip("Tests for general error message when submitting form", { tags: [] }, () => {
@@ -164,7 +182,6 @@ describe('Footer Tests', { tags: ['full'] }, () => {
             cy.footerFirstNameError()
         })
     })
-
 
 
     //

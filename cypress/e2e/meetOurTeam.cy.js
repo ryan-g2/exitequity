@@ -98,7 +98,7 @@ describe('Testing the "Meet our Team" page', { tags: ['full'] }, () => {
         })
     })
 
-    it("Verify the bios with a linkedin link appear and has the href populated", function () {
+    it.only("Verify the bios with a linkedin link appear and has the href populated", function () {
         cy.get('#main-content').within(() => {
             cy.get('[class^="et_pb_row"]').not('.et_pb_row_0').not('.et_pb_row_1').not('.et_pb_row_7')//Removing Noordin from this list since he does not have an LI profile
                 .each(($el) => {
@@ -108,6 +108,10 @@ describe('Testing the "Meet our Team" page', { tags: ['full'] }, () => {
                         cy.log(this.liURL)
                         expect(this.liURL).to.include('https://www.linkedin.com/in/')
                     })
+                    cy.get('@liIcon').should('have.css', 'background-color', 'rgb(0, 123, 182)')
+                    .and('have.css', 'content', 'normal') // This is the css value the browser sees even though the value in the Dev Tools can be seen as "\E09D".  The test passes as-is.
+                    .and('have.attr', 'class', 'icon et_pb_with_border')
+
 
 
                 })

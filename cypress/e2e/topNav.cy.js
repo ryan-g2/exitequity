@@ -66,7 +66,7 @@ describe('Group', { tags: ['full'] }, () => {
         })
     })
 
-    it("Verify top nav header appears correctly", { tags: ['smoke', 'rc'] }, () => {
+    it.only("Verify top nav header appears correctly", { tags: ['smoke', 'rc'] }, () => {
         cy.get(".et_pb_row.et_pb_row_0_tb_header.et_pb_equal_columns").children().eq(0).find('a').then(($el) => {
             expect($el).to.have.text("(425) 462-5819")
             expect($el).to.have.attr("href", "tel:4254625819")
@@ -84,6 +84,7 @@ describe('Group', { tags: ['full'] }, () => {
             expect($el).to.have.attr('title', 'Follow on Facebook')
             expect($el).to.have.attr('target', '_blank')
             expect($el).to.have.css('background-color', 'rgb(51, 77, 66)')
+            expect($el).to.have.css('color', 'rgb(0, 0, 0)')
             expect($el).to.have.attr('href', fbLink)
             cy.request('POST', fbLink).then((resp) => {
                 expect(resp.status).to.equal(200)
@@ -93,6 +94,7 @@ describe('Group', { tags: ['full'] }, () => {
             expect($el).to.have.attr('title', 'Follow on LinkedIn')
             expect($el).to.have.attr('target', '_blank')
             expect($el).to.have.css('background-color', 'rgb(51, 77, 66)')
+            expect($el).to.have.css('color', 'rgb(0, 0, 0)')
             expect($el).to.have.attr('href', liLink)
             //Commented out since requesting a LI page without being signed in will return a 403-Forbidden statusCode
             // cy.request('POST', liLink).then((resp) => {
