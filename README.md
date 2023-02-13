@@ -5,7 +5,7 @@ This project is an example test suite for the exitequity.com website.  This suit
 multiple automated test types for this site using Cypress as a focus.
 
 This suite can be run as any configuration of individual tests or 'all together'.
-See the [Running tests with tags](#Running tests with tags) section for
+See the **Running tests with tags** section for
 the test types available.
 
 
@@ -19,7 +19,7 @@ the test types available.
 After running `npm install`, an additional ,`npx cypress install` may be required before
 running `npx cypress open`
 
-## Running tests with tags
+## Running tests with tags {#runningTests}
 
 `npx cypress run --env grepTags=[tag]`
 
