@@ -24,6 +24,8 @@ running `npx cypress open`
 
 ## Running tests with tags
 
+From a terminal window in the root folder the project was cloned into, run:
+
 `npx cypress run --env grepTags=[tag]`
 
 **tag types** (optional, comma separated) = bvt, smoke, rc, full
@@ -32,6 +34,8 @@ Note: Due to multiple errors on the website causing a memory issue in the testin
 been fleshed out as much as the other specs.  This will be revisited at a later date.
 
 ## Running a specific test spec
+
+From a terminal window in the root folder the project was cloned into, run:
 
 `npx cypress run --spec [reletive path to spec, seperated by commas]`
 EX: mac/lin -> `/cypress/e2e/contactUs.cy.js`
