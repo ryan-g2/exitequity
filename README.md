@@ -8,9 +8,12 @@ This suite can be run as any configuration of individual tests or 'all together'
 See the **Running tests with tags** section for
 the test types available.
 
-
+All commands need to be run inside a terminal instance.
 
 ## Setup
+
+- Clone the project locally to an empty folder
+- Open a terminal instance to that folder
 - `npm install`
 - `npx cypress open`
 
@@ -19,7 +22,7 @@ the test types available.
 After running `npm install`, an additional ,`npx cypress install` may be required before
 running `npx cypress open`
 
-## Running tests with tags {#runningTests}
+## Running tests with tags
 
 `npx cypress run --env grepTags=[tag]`
 
