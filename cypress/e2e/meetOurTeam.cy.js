@@ -98,7 +98,7 @@ describe('Testing the "Meet our Team" page', { tags: ['full'] }, () => {
         })
     })
 
-    it.only("Verify the bios with a linkedin link appear and has the href populated", function () {
+    it("Verify the bios with a linkedin link appear and has the href populated", function () {
         cy.get('#main-content').within(() => {
             cy.get('[class^="et_pb_row"]').not('.et_pb_row_0').not('.et_pb_row_1').not('.et_pb_row_7')//Removing Noordin from this list since he does not have an LI profile
                 .each(($el) => {
