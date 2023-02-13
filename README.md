@@ -1,8 +1,7 @@
 # Automated Cypress tests for exitequity.com
 
 This project is an example test suite for the exitequity.com website.  This suite is
-'living code' and will evolve over time.  The main idea is to eventually build out
-multiple automated test types for this site using Cypress as a focus.
+'living code' and will evolve over time.
 
 This suite can be run as any configuration of individual tests or 'all together'.
 See the **Running tests with tags** section for
@@ -31,12 +30,16 @@ From a terminal window in the root folder the project was cloned into, run:
 **tag types** (optional, comma separated) = bvt, smoke, rc, full
 
 Note: Due to multiple errors on the website causing a memory issue in the testing browser, the ContactUs spec has not
-been fleshed out as much as the other specs.  This will be revisited at a later date.
+been fleshed out as much as the other specs at present.
 
 ## Running a specific test spec
 
 From a terminal window in the root folder the project was cloned into, run:
 
 `npx cypress run --spec [reletive path to spec, seperated by commas]`
-EX: mac/lin -> `/cypress/e2e/contactUs.cy.js`
-PC -> `.\cypress\e2e\contactUs.cy.js`
+
+Example: 
+
+mac/lin -> `npx cypress run --spec /cypress/e2e/topNav.cy.js`
+PC -> `npx cypress run --spec .\cypress\e2e\topNav.cy.js`
+
