@@ -16,6 +16,9 @@ describe('Group', { tags: ['full'] }, () => {
         cy.get('.et_pb_row_1_tb_header').find('.et_pb_button_0_tb_header')
             .should('have.attr', 'href', '/contact')
             .and('have.css', 'background-color', 'rgb(51, 77, 66)')
+            .and('have.css', 'color', 'rgb(255, 255, 255)')
+            .and('have.css', 'font-size', '18px')
+            .and('have.css', 'font-family', 'Poppins, Helvetica, Arial, Lucida, sans-serif')
             .and('contain', "LET'S TALK")//.click() < --commented out due to error on Contact page
             //cy.url().should('contain', '/contact-us') < --commented out due to error on Contact page
     })
